@@ -2,6 +2,7 @@
   --bg: #f6f2e8;
   --ink: #262321;
   --muted: #7d766c;
+  --muted-strong: #6b655c;
   --rule: #e3dccd;
   --accent: #c98a1b;
   --film: #2b2724;
@@ -371,6 +372,30 @@ input {
   margin: 1.25rem 0 0;
   font-size: 0.8125rem;
   color: var(--muted);
+}
+
+/* Set like the tagline so the page opens and closes in the same voice */
+.credit {
+  margin: 2.5rem 0 0;
+  padding: 1.25rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted-strong);
+}
+
+.credit a {
+  color: inherit;
+  text-decoration-color: var(--muted);
+  text-underline-offset: 3px;
+  transition: color 160ms var(--ease), text-decoration-color 160ms var(--ease);
+}
+
+.credit a:hover,
+.credit a:focus-visible {
+  color: var(--ink);
+  text-decoration-color: var(--accent);
 }
 
 /* Only useful with a physical keyboard */
