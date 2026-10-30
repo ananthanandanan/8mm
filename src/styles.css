@@ -367,6 +367,19 @@ input {
   border-color: var(--muted);
 }
 
+.shortcut-hint {
+  margin: 1.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+/* Only useful with a physical keyboard */
+@media (hover: none) {
+  .shortcut-hint {
+    display: none;
+  }
+}
+
 @media (max-width: 380px) {
   .scale__option span {
     width: 2.5rem;

@@ -25,3 +25,13 @@ export function calculateRating(scores) {
 
   return { rated, total, sum, stars, complete, clamped };
 }
+
+/**
+ * Text for the clipboard, e.g. "★★★★½ 4.5/5".
+ * @param {number} stars a half-star value from 0.5 to 5
+ */
+export function formatRating(stars) {
+  const full = Math.floor(stars);
+  const glyphs = '★'.repeat(full) + (stars - full === 0.5 ? '½' : '');
+  return `${glyphs} ${stars.toFixed(1)}/5`;
+}

@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { calculateRating } from '../src/rating.js';
+import { calculateRating, formatRating } from '../src/rating.js';
 
 // Build eight scores that add up to `sum`, using 1s then a trailing 0.5.
 function scoresFor(sum) {
@@ -68,4 +68,11 @@ test('clamps a completed all-zero rating to 0.5 stars', () => {
   assert.equal(result.complete, true);
   assert.equal(result.stars, 0.5);
   assert.equal(result.clamped, true);
+});
+
+test('formats the copied rating with star glyphs', () => {
+  assert.equal(formatRating(4), '★★★★ 4.0/5');
+  assert.equal(formatRating(4.5), '★★★★½ 4.5/5');
+  assert.equal(formatRating(5), '★★★★★ 5.0/5');
+  assert.equal(formatRating(0.5), '½ 0.5/5');
 });

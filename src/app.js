@@ -1,5 +1,5 @@
 import { CRITERIA, SCORE_OPTIONS } from './criteria.js';
-import { calculateRating } from './rating.js';
+import { calculateRating, formatRating } from './rating.js';
 
 const STAR_PATH = 'M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z';
 const INFO_ICON = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8 7.2v3.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="5" r=".85" fill="currentColor"/></svg>';
@@ -13,6 +13,11 @@ const starsEl = document.getElementById('stars');
 const strip = document.getElementById('strip');
 const status = document.getElementById('status');
 const copyButton = document.getElementById('copy');
+const resetButton = document.getElementById('reset');
+
+const COPY_LABEL = copyButton.textContent;
+const KEY_SCORES = { 0: 0, 5: 0.5, 1: 1 };
+let copyTimer;
 
 function optionLabel(value) {
   return value === 0.5 ? '½' : String(value);
@@ -78,6 +83,62 @@ function update() {
 
   copyButton.disabled = !result.complete;
 }
+
+function flashCopyLabel(text) {
+  clearTimeout(copyTimer);
+  copyButton.textContent = text;
+  copyTimer = setTimeout(() => {
+    copyButton.textContent = COPY_LABEL;
+  }, 1600);
+}
+
+// Focus the row's checked radio, or its first one, the way Tab would.
+function focusRow(index) {
+  const row = form.querySelectorAll('.criterion')[index];
+  if (!row) {
+    copyButton.focus();
+    return;
+  }
+  (row.querySelector('input:checked') ?? row.querySelector('input')).focus();
+}
+
+copyButton.addEventListener('click', async () => {
+  const { stars, complete } = calculateRating(scores);
+  if (!complete) return;
+  try {
+    await navigator.clipboard.writeText(formatRating(stars));
+    flashCopyLabel('Copied');
+  } catch {
+    flashCopyLabel("Couldn't copy");
+  }
+});
+
+resetButton.addEventListener('click', () => {
+  scores.fill(null);
+  form.reset();
+  clearTimeout(copyTimer);
+  copyButton.textContent = COPY_LABEL;
+  update();
+  window.scrollTo({ top: 0 });
+});
+
+// Type 0, 5 or 1 to score the focused row, or the next unrated one,
+// then move on to the following row.
+document.addEventListener('keydown', (event) => {
+  if (event.metaKey || event.ctrlKey || event.altKey || !(event.key in KEY_SCORES)) return;
+
+  const focusedRow = document.activeElement?.closest?.('.criterion');
+  const rows = [...form.querySelectorAll('.criterion')];
+  const index = focusedRow ? rows.indexOf(focusedRow) : scores.indexOf(null);
+  if (index === -1) return;
+
+  event.preventDefault();
+  const input = rows[index].querySelector(`input[value="${KEY_SCORES[event.key]}"]`);
+  input.checked = true;
+  scores[index] = KEY_SCORES[event.key];
+  update();
+  focusRow(index + 1);
+});
 
 form.addEventListener('change', (event) => {
   const index = CRITERIA.findIndex((c) => c.id === event.target.name);
