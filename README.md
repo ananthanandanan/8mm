@@ -70,7 +70,7 @@ docs/
 
 ## Hosting
 
-8mm runs on Cloudflare Pages at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
+8mm runs on Cloudflare Pages and is available at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
 
 On your phone, use **Add to Home Screen** (the share menu in Safari on iPhone, or the ⋮ menu in Chrome on Android). It then opens full screen, like an app.
 
