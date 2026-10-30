@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "npx --yes serve -l 5173 .",
-    "test": "node --test \"test/**/*.test.js\""
+    "test": "node --test \"test/**/*.test.js\"",
+    "icons": "python3 scripts/make_icons.py icons"
   },
   "engines": {
     "node": ">=20"

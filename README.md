@@ -35,6 +35,10 @@ Example: 6 / 8 → 3.75 → **4.0★**
 
 ```
 index.html          Page shell
+manifest.webmanifest  Home screen install details
+icons/              Favicon and home screen icons
+scripts/
+  make_icons.py     Draws the PNG icons (npm run icons)
 src/
   app.js            UI wiring (render, state, copy, reset)
   criteria.js       The eight criteria and score options
@@ -69,6 +73,8 @@ The app is fully static, so any static host works. On Vercel (Hobby plan):
 4. Deploy. Every push to `main` redeploys automatically.
 
 GitHub Pages, Netlify, and Cloudflare Pages work the same way.
+
+Once it's live, open it on your phone and use **Add to Home Screen** (Safari's share menu on iPhone, the ⋮ menu in Chrome on Android). It opens full screen like an app.
 
 ## Scope
 
