@@ -2,7 +2,7 @@
 
 **Eight perspectives. One rating.**
 
-A little calculator for rating movies on Letterboxd.
+A little calculator for rating movies on Letterboxd. Try it at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
 
 I watch a lot of movies, and picking a star rating on gut feel alone never quite sat right. Sometimes two films land on the same number even though I liked one a bit more. So now I tap through eight quick questions after the credits roll and get a rating I'm happy to log.
 
@@ -65,7 +65,7 @@ Opening `index.html` directly from disk won't work, because browsers block ES mo
 
 ## Hosting
 
-8mm is hosted on Cloudflare Pages. Every push to `main` goes live automatically.
+8mm is hosted on Cloudflare Pages at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com). Every push to `main` goes live automatically.
 
 On your phone, use **Add to Home Screen** (Safari's share menu on iPhone, the ⋮ menu in Chrome on Android) and it opens full screen like an app.
 
