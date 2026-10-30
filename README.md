@@ -2,73 +2,78 @@
 
 **Eight perspectives. One rating.**
 
-A little calculator for rating movies on Letterboxd. Try it at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
+A small calculator for rating movies on Letterboxd. Try it at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
 
-I watch a lot of movies, and picking a star rating on gut feel alone never quite sat right. Sometimes two films land on the same number even though I liked one a bit more. So now I tap through eight quick questions after the credits roll and get a rating I'm happy to log.
+I watch a lot of movies, and rating them on gut feel never sat right with me. Two films would land on the same number even though I clearly liked one more. Now I score eight quick questions after the credits roll and log the rating I get.
 
 ## How it works
 
 Score each criterion **0**, **½**, or **1**:
 
-| Criterion | What it evaluates |
+| Criterion | What it covers |
 |---|---|
-| Story | Plot, narrative structure, coherence, engagement |
-| Direction | The director's vision and how the film comes together |
-| Acting | Quality, believability, and effectiveness of performances |
-| Pacing | Rhythm and flow; whether scenes feel rushed or drawn out |
-| Depth | Themes, layers of meaning, thought-provoking ideas |
-| Cinematography | Composition, framing, lighting, camera movement |
-| Screenplay | Dialogue, scene construction, character development |
-| Emotional Impact | How strongly the film affects you and stays with you |
+| Story | Plot, structure, coherence, and how engaging it is |
+| Direction | The director's vision and how well the film comes together |
+| Acting | How believable and effective the performances are |
+| Pacing | Rhythm and flow, and whether scenes feel rushed or drawn out |
+| Depth | Themes, layers of meaning, and ideas that stay with you |
+| Cinematography | Composition, framing, lighting, and camera movement |
+| Screenplay | Dialogue, scene construction, and character development |
+| Emotional Impact | How strongly the film hits you, and for how long |
 
-The rating is:
+8mm turns the total into stars and rounds to the nearest half star:
 
 ```
 stars = round((sum / 8) * 5 * 2) / 2
 ```
 
-The result is clamped to a minimum of 0.5★, Letterboxd's lowest rating. It appears only after all eight criteria are scored.
+For example, a total of 6 out of 8 is 3.75, which rounds to **4.0★**.
 
-Example: 6 / 8 → 3.75 → **4.0★**
+A few details:
 
-## Project structure
+- The rating appears only after you score all eight criteria.
+- An all-zero score shows **0.5★**, because that's the lowest rating Letterboxd allows.
+- **Copy rating** puts text like `★★★★ 4.0/5` on your clipboard.
+- On a keyboard, type `0`, `5`, or `1` to score each criterion in order.
 
-```
-index.html          Page shell
-manifest.webmanifest  Home screen install details
-icons/              Favicon and home screen icons
-scripts/
-  make_icons.py     Draws the PNG icons (npm run icons)
-src/
-  app.js            UI wiring (render, state, copy, reset)
-  criteria.js       The eight criteria and score options
-  rating.js         Pure scoring function (no DOM)
-  styles.css        Styles
-test/
-  rating.test.js    Tests for the scoring function
-docs/
-  movie_rating_app_brief.md   Original product and design brief
-```
+## Run it locally
 
-It uses no framework, no build step, and no dependencies. It's plain HTML, CSS, and ES modules.
-
-## Development
-
-Requires Node 20+ (only for the local server and tests).
+You need Node 20 or later, but only for the dev server and the tests.
 
 ```sh
 npm run dev    # serves the site at http://localhost:5173
 npm test       # runs the scoring tests
 ```
 
-Opening `index.html` directly from disk won't work, because browsers block ES modules over `file://`. Use the dev server.
+Use the dev server rather than opening `index.html` from disk. Browsers block ES modules over `file://`.
+
+## Project structure
+
+There's no framework, no build step, and no dependencies. It's plain HTML, CSS, and ES modules.
+
+```
+index.html              Page shell
+manifest.webmanifest    Home screen install details
+icons/                  Favicon and home screen icons
+scripts/
+  make_icons.py         Draws the PNG icons (npm run icons)
+src/
+  app.js                UI wiring (render, state, copy, reset, keyboard)
+  criteria.js           The eight criteria and score options
+  rating.js             Pure scoring function (no DOM)
+  styles.css            Styles
+test/
+  rating.test.js        Tests for the scoring function
+docs/
+  movie_rating_app_brief.md   The original brief
+```
 
 ## Hosting
 
-8mm is hosted on Cloudflare Pages at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com). Every push to `main` goes live automatically.
+8mm runs on Cloudflare Pages at [8mm.ananthanandanan.com](https://8mm.ananthanandanan.com).
 
-On your phone, use **Add to Home Screen** (Safari's share menu on iPhone, the ⋮ menu in Chrome on Android) and it opens full screen like an app.
+On your phone, use **Add to Home Screen** (the share menu in Safari on iPhone, or the ⋮ menu in Chrome on Android). It then opens full screen, like an app.
 
 ## Scope
 
-It's just a calculator, so there's no login, no saved history, and no movie search. You get the rating, then go log it on Letterboxd. If you're curious how it got here, [the brief](docs/movie_rating_app_brief.md) has the full backstory.
+8mm is a calculator and nothing more. There's no login, no saved history, and no movie search. You get a rating, then you log it on Letterboxd. [The brief](docs/movie_rating_app_brief.md) explains why it stays that small.
